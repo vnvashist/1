@@ -1,0 +1,50 @@
+# Apartment hunt settings. Edit freely; see README.md for what each question means.
+
+[search]
+site = "washingtondc"      # craigslist.org subdomain
+subarea = "doc"            # "doc" = DC proper. "" = whole DC metro (adds MD/VA)
+bedrooms = 1
+bathrooms = 1
+max_rent = 1700
+stretch = 0                # allow listings up to max_rent + stretch (flagged, -10 score)
+min_rent = 1000            # a DC 1BR below this is almost always a scam
+fetch_details = true       # open each new listing for its description, map pin and amenities
+max_detail_fetches = 40
+request_delay_seconds = 2.0
+# Extra Craigslist filters, e.g.:
+#   laundry = "1"   -> w/d in unit only
+#   pets_cat = "1"  -> cats OK        pets_dog = "1" -> dogs OK
+#   availabilityMode = "1" -> available within 30 days
+extra_params = {}
+
+[location]
+allow_unknown = true       # keep listings whose neighborhood can't be determined (flagged)
+neighborhood_match_km = 1.0
+# Move neighborhoods between tiers: prime / good / caution / excluded
+# tier_overrides = { "Petworth" = "prime", "Foggy Bottom" = "excluded" }
+tier_overrides = {}
+# Your office, to reward short commutes (straight-line distance):
+# work = { lat = 38.8977, lon = -77.0365, max_km = 5 }
+
+[preferences]
+# Listings that don't mention these lose 10 points and get a warning.
+must_have = []             # e.g. ["in_unit_laundry", "pets_allowed"]
+
+[preferences.weights]      # points added when a listing mentions the amenity
+in_unit_laundry = 8
+dishwasher = 4
+central_air = 5
+pets_allowed = 0
+outdoor_space = 4
+gym = 2
+doorman = 2
+parking = 0
+hardwood = 2
+dog_park_nearby = 0
+
+[output]
+dir = "reports"
+min_score = 55             # listings below this are still in the CSV, but not the summary/email
+
+[email]
+to = ""                    # SMTP credentials come from env vars; see README
