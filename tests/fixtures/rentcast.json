@@ -1,0 +1,23 @@
+[
+  {
+    "id": "1830-Columbia-Rd-NW,-Apt-503,-Washington,-DC-20009",
+    "formattedAddress": "1830 Columbia Rd NW, Apt 503, Washington, DC 20009",
+    "addressLine1": "1830 Columbia Rd NW",
+    "addressLine2": "Apt 503",
+    "city": "Washington", "state": "DC", "zipCode": "20009",
+    "latitude": 38.9212, "longitude": -77.0425,
+    "propertyType": "Apartment", "bedrooms": 1, "bathrooms": 1, "squareFootage": 610,
+    "status": "Active", "price": 1695, "listingType": "Standard",
+    "listedDate": "2026-11-28T00:00:00.000Z", "daysOnMarket": 3,
+    "listingAgent": {"name": "Pat Agent", "phone": "2025550100"},
+    "listingOffice": {"name": "Example Realty"}
+  },
+  {
+    "id": "1500-Wilson-Blvd,-Arlington,-VA",
+    "formattedAddress": "1500 Wilson Blvd, Arlington, VA 22209",
+    "addressLine1": "1500 Wilson Blvd", "addressLine2": null,
+    "latitude": 38.8950, "longitude": -77.0730,
+    "propertyType": "Apartment", "bedrooms": 1, "bathrooms": 1,
+    "price": 1600
+  }
+]

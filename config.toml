@@ -1,50 +1,77 @@
-# Apartment hunt settings. Edit freely; see README.md for what each question means.
+# Apartment hunt settings. See README.md for setup of each source.
 
 [search]
-site = "washingtondc"      # craigslist.org subdomain
-subarea = "doc"            # "doc" = DC proper. "" = whole DC metro (adds MD/VA)
 bedrooms = 1
 bathrooms = 1
-max_rent = 1700
-stretch = 0                # allow listings up to max_rent + stretch (flagged, -10 score)
+max_rent = 1700            # rent only; utilities are extra
+stretch = 100              # up to $1,800 allowed, losing up to 10 points the further over $1,700
 min_rent = 1000            # a DC 1BR below this is almost always a scam
+
+[move_in]
+date = "2027-01-31"
+earliest_ok_days = 21      # a lease starting up to 3 weeks early still counts as a match
+latest_ok_days = 10
+
+# --- Sources -----------------------------------------------------------------
+
+[sources.craigslist]
+enabled = true
+site = "washingtondc"
+subarea = "doc"            # DC proper only (no NoVA / MD)
 fetch_details = true       # open each new listing for its description, map pin and amenities
 max_detail_fetches = 40
 request_delay_seconds = 2.0
-# Extra Craigslist filters, e.g.:
-#   laundry = "1"   -> w/d in unit only
-#   pets_cat = "1"  -> cats OK        pets_dog = "1" -> dogs OK
-#   availabilityMode = "1" -> available within 30 days
-extra_params = {}
+extra_params = {}          # e.g. { laundry = "1" } to require w/d in unit server-side
+
+[sources.email_alerts]     # Zillow / Apartments.com / HotPads / Redfin / Trulia alert emails
+enabled = false            # set true after setting IMAP_USER / IMAP_PASSWORD (README)
+imap_host = "imap.gmail.com"
+folder = "INBOX"           # or a Gmail label such as "Apartments"
+days = 3                   # how far back to read on each run
+senders = ["zillow.com", "apartments.com", "hotpads.com", "redfin.com", "trulia.com", "zumper.com"]
+
+[sources.rentcast]         # https://www.rentcast.io/api - aggregates MLS and rental sites
+enabled = false            # set true after setting RENTCAST_API_KEY (README)
+max_days_old = 14
+min_hours_between_runs = 20  # free plan = 50 calls/month
+
+# --- Location ------------------------------------------------------------------
 
 [location]
 allow_unknown = true       # keep listings whose neighborhood can't be determined (flagged)
 neighborhood_match_km = 1.0
+# Bonus points for areas you like best.
+favorites = { "Adams Morgan" = 5, "Kalorama" = 3, "Dupont Circle" = 3, "Columbia Heights" = 3, "Mount Pleasant" = 3, "U Street" = 3 }
 # Move neighborhoods between tiers: prime / good / caution / excluded
-# tier_overrides = { "Petworth" = "prime", "Foggy Bottom" = "excluded" }
 tier_overrides = {}
-# Your office, to reward short commutes (straight-line distance):
-# work = { lat = 38.8977, lon = -77.0365, max_km = 5 }
+
+# --- Preferences --------------------------------------------------------------
 
 [preferences]
-# Listings that don't mention these lose 10 points and get a warning.
-must_have = []             # e.g. ["in_unit_laundry", "pets_allowed"]
+# Rejected if the listing says it doesn't have them (e.g. "shared laundry", "window units");
+# penalized and flagged "confirm" if it just doesn't mention them.
+must_have = ["in_unit_laundry", "central_air"]
+must_have_missing_penalty = 12
+ground_floor_penalty = 12  # street-level windows = people looking in
 
-[preferences.weights]      # points added when a listing mentions the amenity
-in_unit_laundry = 8
-dishwasher = 4
-central_air = 5
-pets_allowed = 0
-outdoor_space = 4
-gym = 2
-doorman = 2
+[preferences.size]         # sq ft; you work from home and need room for a desk
+min = 475
+good = 600
+great = 750
+
+[preferences.weights]      # extra points when a listing mentions the amenity
+workspace = 5              # den, office nook, flex room
+dishwasher = 3
+outdoor_space = 3
+hardwood = 1
+gym = 0
+doorman = 0
 parking = 0
-hardwood = 2
-dog_park_nearby = 0
+pets_allowed = 0
 
 [output]
 dir = "reports"
 min_score = 55             # listings below this are still in the CSV, but not the summary/email
 
 [email]
-to = ""                    # SMTP credentials come from env vars; see README
+to = ""                    # where to send the report; credentials come from env vars (README)
