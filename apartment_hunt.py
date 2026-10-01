@@ -13,7 +13,7 @@ Sources (turn on/off in config.toml):
   rentcast      - RentCast listings API (aggregates MLS + rental sites; API key)
   --import-csv  - anything else you paste in by hand
 
-Standard library only; Python 3.11+.
+Standard library only on Python 3.11+; on 3.8-3.10 run `pip install tomli` first.
 
     python apartment_hunt.py                   # search, report new listings
     python apartment_hunt.py --all             # include previously seen ones
@@ -36,7 +36,6 @@ import smtplib
 import sqlite3
 import sys
 import time
-import tomllib
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -44,6 +43,14 @@ from dataclasses import dataclass, field
 from datetime import date, datetime, timedelta
 from email.message import EmailMessage
 from pathlib import Path
+
+try:
+    import tomllib  # Python 3.11+
+except ModuleNotFoundError:
+    try:
+        import tomli as tomllib  # same parser, packaged for Python 3.8-3.10
+    except ModuleNotFoundError:
+        sys.exit("This Python is older than 3.11. Run:  pip install tomli   (or install Python 3.11+)")
 
 USER_AGENT = (
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_0) AppleWebKit/537.36 "
