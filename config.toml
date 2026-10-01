@@ -24,9 +24,9 @@ request_delay_seconds = 2.0
 extra_params = {}          # e.g. { laundry = "1" } to require w/d in unit server-side
 
 [sources.email_alerts]     # Zillow / Apartments.com / HotPads / Redfin / Trulia alert emails
-enabled = false            # set true after setting IMAP_USER / IMAP_PASSWORD (README)
+enabled = true             # needs IMAP_USER / IMAP_PASSWORD set (README); skipped otherwise
 imap_host = "imap.gmail.com"
-folder = "INBOX"           # or a Gmail label such as "Apartments"
+folder = "Apartments"      # the Gmail label your alert filter applies
 days = 3                   # how far back to read on each run
 senders = ["zillow.com", "apartments.com", "hotpads.com", "redfin.com", "trulia.com", "zumper.com"]
 
