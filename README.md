@@ -48,7 +48,7 @@ Most DC landlords list 30–45 days before a unit is free, so the best Jan 31 li
 
 ## Run it
 
-Requires Python 3.11+. It uses only the standard library, so there's nothing to install.
+Requires Python 3.8+. On 3.11+ there's nothing to install; on 3.8–3.10 run `pip install -r requirements.txt` first (adds the small `tomli` config reader).
 
 ```bash
 python3 apartment_hunt.py                 # all enabled sources, new listings only
